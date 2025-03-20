@@ -54,7 +54,8 @@ enum Token
     tok_double = -6,
     tok_arg_type = -7,
     TOK_INT_TYPE = -9,   // Tip za int argument
-    TOK_FLOAT_TYPE = -10, 
+    TOK_FLOAT_TYPE = -10,
+    TOK_IMPORT = -11
 };
 
 static std::string IdentifierStr; // Filled in if tok_identifier
@@ -87,6 +88,9 @@ static int gettok()
     
     if (IdentifierStr == "Float")
         return TOK_FLOAT_TYPE; 
+
+    if (IdentifierStr == "import")
+        return TOK_IMPORT;
 
     return tok_identifier;
     }
@@ -943,6 +947,9 @@ static void MainLoop()
             break;
         case tok_function:
             HandleDefinition();
+            break;
+        case TOK_IMPORT:
+            HandleExtern();
             break;
         default:
             HandleTopLevelExpression();
